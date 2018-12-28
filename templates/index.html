@@ -1,22 +1,42 @@
 {% extends "base.html" %}
 {% block content %}
     <div class="container">
-        <h1>Contacts</h1>
-        <table class="table table-dark">
-            <thead>
-            {% for i in range(colHeaders|length) %}
-                <th scope="col">{{ colHeaders[i][0] }}</th>
-            {% endfor %}
-            </thead>
-            <tbody>
-            {% for contact in contacts %}
-                <tr>
-                {% for i in range(contact|length) %}
-                    <td>{{ contact[i] }}</td>
-                {% endfor %}
-                </tr>
-            {% endfor %}
-            </tbody>
-        </table>
-    </div>
+        <div class="row">
+            <div class="col-lg">
+                <h1>Add Contacts</h1>
+                <form method="post">
+                    <div class="row">
+                        <div class="col">
+                            <input id="name" name="name" class="form-control" type="text" placeholder="Add a name to the database">
+                        </div>
+                        <div class="col">
+                            <input id="number" name="number" class="form-control" type="tel" placeholder="(###) ###-####">
+                        </div>
+                        <button type="submit" class="btn btn-primary">Submit</button>
+                    </div>
+                </form>
+            </div>
+        </div> <!-- end row -->
+        <div class="row">
+            <div class="col-lg">
+                <h1>All Contacts</h1>
+                <table class="table table-striped">
+                    <thead>
+                    {% for i in range(headers|length) %}
+                        <th scope="col">{{ headers[i][0] }}</th>
+                    {% endfor %}
+                    </thead>
+                    <tbody>
+                    {% for contact in contacts %}
+                        <tr>
+                        {% for i in range(contact|length) %}
+                            <td>{{ contact[i] }}</td>
+                        {% endfor %}
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div> <!-- end row -->
+    </div> <!-- end container -->
 {% endblock content %}
