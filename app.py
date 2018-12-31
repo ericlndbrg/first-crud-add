@@ -13,6 +13,15 @@ def insertRecords(name, number):
     return None
 
 
+def deleteRecords(name):
+    conn = sqlite3.connect("site.db")
+    c = conn.cursor()
+    c.execute("DELETE FROM contacts WHERE name=:name", {"name": name})
+    conn.commit()
+    conn.close()
+    return None
+
+
 @app.route("/", methods=["GET", "POST"])
 def index():
 
@@ -24,8 +33,12 @@ def index():
     conn.close()
 
     if request.method == "POST":
-        insertRecords(request.form["name"], request.form["number"])
-        return redirect(url_for("index"))
+        if "add-name" in request.form and "add-number" in request.form:
+            insertRecords(request.form["add-name"], request.form["add-number"])
+            return redirect(url_for("index"))
+        elif "delete-name" in request.form:
+            deleteRecords(request.form["delete-name"])
+            return redirect(url_for("index"))
 
     return render_template("index.html", contacts=allContacts, headers=colHeaders)
 
